@@ -1,3 +1,5 @@
+pub mod pg_common;
+
 pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
