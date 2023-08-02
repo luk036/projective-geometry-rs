@@ -1,3 +1,3 @@
-# projective-geometry-rs
+# #️⃣ projective-geometry-rs
 
 > Projective Geometry in Rust
