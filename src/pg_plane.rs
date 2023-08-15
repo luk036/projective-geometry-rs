@@ -1,10 +1,10 @@
 /// The code is defining a trait called `ProjectivePlanePrimitive` for a projection plane. This trait
 /// has two associated functions:
 /// 1. `incident` checks if a line is incident to a point.
-/// 2. `circ` creates a line that joins two points.
+/// 2. `meet` creates a line that joins two points.
 pub trait ProjectivePlanePrimitive<Line>: Eq {
     fn incident(&self, dual: &Line) -> bool;
-    fn circ(&self, other: &Self) -> Line; // join or meet
+    fn meet(&self, other: &Self) -> Line; // join or meet
 }
 
 /// The function checks if two points lie on the same line in a projective plane.
@@ -22,8 +22,8 @@ where
     Point: ProjectivePlanePrimitive<Line>,
     Line: ProjectivePlanePrimitive<Point>,
 {
-    let ln_l = pt_p.circ(pt_q);
-    let ln_m = pt_q.circ(pt_p);
+    let ln_l = pt_p.meet(pt_q);
+    let ln_m = pt_q.meet(pt_p);
     if ln_l != ln_m {
         return false;
     }
@@ -48,5 +48,5 @@ where
     Point: ProjectivePlanePrimitive<Line>,
     Line: ProjectivePlanePrimitive<Point>,
 {
-    pt_p.circ(pt_q).incident(pt_r)
+    pt_p.meet(pt_q).incident(pt_r)
 }
