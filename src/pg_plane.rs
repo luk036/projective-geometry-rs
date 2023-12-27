@@ -1,7 +1,9 @@
-/// The code is defining a trait called `ProjectivePlanePrimitive` for a projection plane. This trait
-/// has two associated functions:
-/// 1. `incident` checks if a line is incident to a point.
-/// 2. `meet` creates a line that joins two points.
+/// `ProjectivePlanePrimitive` is a trait that defines the basic operations needed
+/// for points and lines to interact in a projective plane. It requires the
+/// implementing type to be `Eq` and provides two functions:
+///
+/// - `incident` - Checks if a line is incident to (passes through) a point.
+/// - `meet` - Joins two points by creating a line between them.
 pub trait ProjectivePlanePrimitive<Line>: Eq {
     fn incident(&self, dual: &Line) -> bool;
     fn meet(&self, other: &Self) -> Line; // join or meet
@@ -50,3 +52,171 @@ where
 {
     pt_p.meet(pt_q).incident(pt_r)
 }
+
+// test_pg_plane.rs
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_check_projection_plane_primitive() {
+        // Arrange
+        #[derive(PartialEq, Eq)]
+        struct Point;
+
+        #[derive(PartialEq, Eq)]
+        struct Line;
+
+        impl ProjectivePlanePrimitive<Line> for Point {
+            fn incident(&self, _dual: &Line) -> bool {
+                true
+            }
+
+            fn meet(&self, _other: &Self) -> Line {
+                Line {}
+            }
+        }
+
+        impl ProjectivePlanePrimitive<Point> for Line {
+            fn incident(&self, _dual: &Point) -> bool {
+                true
+            }
+
+            fn meet(&self, _other: &Self) -> Point {
+                Point {}
+            }
+        }
+
+        let pt_p = Point;
+        let pt_q = Point;
+
+        // Act
+        let result = check_projection_plane_primitive(&pt_p, &pt_q);
+
+        // Assert
+        assert!(result);
+    }
+
+    #[test]
+    fn test_check_projection_plane_primitive_false() {
+        // Arrange
+        #[derive(PartialEq, Eq)]
+        struct Point;
+
+        #[derive(PartialEq, Eq)]
+        struct Line;
+
+        impl ProjectivePlanePrimitive<Line> for Point {
+            fn incident(&self, _dual: &Line) -> bool {
+                true
+            }
+
+            fn meet(&self, _other: &Self) -> Line {
+                Line {}
+            }
+        }
+
+        impl ProjectivePlanePrimitive<Point> for Line {
+            fn incident(&self, _dual: &Point) -> bool {
+                true
+            }
+
+            fn meet(&self, _other: &Self) -> Point {
+                Point {}
+            }
+        }
+
+        let pt_p = Point;
+        let pt_q = Point;
+
+        // Act
+        let result = check_projection_plane_primitive(&pt_p, &pt_q);
+
+        // Assert
+        assert!(result);
+    }
+
+    #[test]
+    fn test_coincident() {
+        // Arrange
+        #[derive(PartialEq, Eq)]
+        struct Point;
+
+        #[derive(PartialEq, Eq)]
+        struct Line;
+
+        impl ProjectivePlanePrimitive<Line> for Point {
+            fn incident(&self, _dual: &Line) -> bool {
+                true
+            }
+
+            fn meet(&self, _other: &Self) -> Line {
+                Line {}
+            }
+        }
+
+        impl ProjectivePlanePrimitive<Point> for Line {
+            fn incident(&self, _dual: &Point) -> bool {
+                true
+            }
+
+            fn meet(&self, _other: &Self) -> Point {
+                Point {}
+            }
+        }
+
+        let pt_p = Point;
+        let pt_q = Point;
+        let pt_r = Point;
+
+        // Act
+        let result = coincident(&pt_p, &pt_q, &pt_r);
+
+        // Assert
+        assert!(result);
+    }
+
+    #[test]
+    fn test_coincident_false() {
+        // Arrange
+        #[derive(PartialEq, Eq)]
+        struct Point;
+
+        #[derive(PartialEq, Eq)]
+        struct Line;
+
+        impl ProjectivePlanePrimitive<Line> for Point {
+            fn incident(&self, _dual: &Line) -> bool {
+                true
+            }
+
+            fn meet(&self, _other: &Self) -> Line {
+                Line {}
+            }
+        }
+
+        impl ProjectivePlanePrimitive<Point> for Line {
+            fn incident(&self, _dual: &Point) -> bool {
+                true
+            }
+
+            fn meet(&self, _other: &Self) -> Point {
+                Point {}
+            }
+        }
+
+        let pt_p = Point;
+        let pt_q = Point;
+        let pt_r = Point;
+
+        // Act
+        let result = coincident(&pt_p, &pt_q, &pt_r);
+
+        // Assert
+        assert!(result);
+    }
+}
+
+
+
